@@ -1,1 +1,6 @@
-# LKM-Hacking
+image::img/lkmbasick.jpg
+
+== LKM-Hacking
+
+* Dependencies :
+** linux-headers-generic
