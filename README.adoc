@@ -25,3 +25,4 @@ static void __exit module_exit(void){
 * References :
 
 http://www.ouah.org/LKM_HACKING.html[The Hackers Choice]
+https://elinux.org/Deferred_Initcalls[elinux]
