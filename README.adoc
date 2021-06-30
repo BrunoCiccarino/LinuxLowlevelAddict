@@ -22,6 +22,45 @@ static void __exit module_exit(void){
 }
 ```
 
+* How modules are loaded into the kernel:
+
+You can see the modules being loaded into the kernel with the ```lsmod``` command it checks the information in ```/proc/modules```. And there are some ways modules use to find the kernel:
+ 
+ ** [x] - ```alias char-major-10-30 softdog```
+
+The generic identifier *char-major-10-30* refers to the *softdog.o* module
+
+* LKM Hellow World:
+
+
+```
+
+#ifndef _KERNEL_MODULE_
+#define _KERNEL_MODULE_
+
+#endif /* _KERNEL_MODULE_ */
+
+#include <linux/module.h> /* included for all kernel modules       */
+#include <linux/kernel.h> /* included for KERN_INFO                */
+#include <linux/init.h>   /* Needed for the macros */
+
+module_init(hello_init);
+module_exit(hello_exit);
+
+static int __init hello_init(void){
+    printk(KERN_INFO "<1>Hello World\n");
+    return 0;
+}
+
+static void __exit hello_exit(void){
+    printk(KERN_INFO"<1> Bye bye!");
+}
+
+MODULE_AUTHOR("Ch4r0nN");
+MODULE_LICENSE("MIT");
+
+```
+
 * References :
 
 http://www.ouah.org/LKM_HACKING.html[The Hackers Choice]
