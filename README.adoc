@@ -7,8 +7,8 @@ image::img/lkmbasick.jpg[]
 
 * Introduction :
 
-LKMs are Loadable Kernel Modules used by the Linux kernel to expand his functionality. The advantage of those LKMs : The can be loaded dynamically; there must be no recompilation of the whole kernel. Because of those features they are often used for specific device drivers (or filesystems) such as soundcards etc.
-Every LKM consist of two basic functions (minimum) :
+*LKMs are Loadable Kernel Modules used by the Linux kernel to expand his functionality*. The advantage of those LKMs : The can be loaded dynamically; there must be no recompilation of the whole kernel. Because of those features they are often used for specific device drivers (or filesystems) such as soundcards etc.
+Every LKM consist of two basic functions (##minimum##) :
 
 ```
 static int __init module_init(void){
