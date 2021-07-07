@@ -10,14 +10,15 @@ image::img/lkmbasick.jpg[]
 *LKMs are Loadable Kernel Modules used by the Linux kernel to enarge his functionality*. May or may not be dynamically allocated; there must be no recompilation of the whole kernel. Because of those features they are often used for specific device drivers (or filesystems) such as soundcards etc.
 Every LKM consist of two basic functions (*minimum*) :
 
-```
-static int __init module_init(void){
-
+```c
+static int __init module_init(void)
+{
     return 0;
 }
 
 
-static void __exit module_exit(void){
+static void __exit module_exit(void)
+{
 
 }
 ```
@@ -33,8 +34,7 @@ The generic identifier *char-major-10-30* refers to the *softdog.o* module
 * LKM Hellow World:
 
 
-```
-
+```c
 #ifndef _KERNEL_MODULE_
 #define _KERNEL_MODULE_
 
@@ -47,18 +47,19 @@ The generic identifier *char-major-10-30* refers to the *softdog.o* module
 module_init(hello_init);
 module_exit(hello_exit);
 
-static int __init hello_init(void){
+static int __init hello_init(void)
+{
     printk(KERN_INFO "<1>Hello World\n");
     return 0;
 }
 
-static void __exit hello_exit(void){
+static void __exit hello_exit(void)
+{
     printk(KERN_INFO"<1> Bye bye!");
 }
 
 MODULE_AUTHOR("Ch4r0nN");
 MODULE_LICENSE("MIT");
-
 ```
 
 * References :
