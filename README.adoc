@@ -2,11 +2,6 @@ image::img/lkmbasick.jpg[]
 
 == LKM-Hacking
 
-* Contents :
-
-https://www.github.com/Ch4r0nN/LKM-Exploration/tree/main/README.adoc#11[Dependencies]
-
-https://www.github.com/Ch4r0nN/LKM-Exploration/tree/main/README.adoc#14[Introduction]
 
 * Dependencies :
 ** linux-headers-generic
