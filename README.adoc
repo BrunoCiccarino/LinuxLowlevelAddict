@@ -6,6 +6,8 @@ image::img/lkmbasick.jpg[]
 * Dependencies :
 ** linux-headers-generic
 
+** C compiler I recommend ```gcc or cc```
+
 * Introduction :
 
 *LKMs are Loadable Kernel Modules used by the Linux kernel to enarge his functionality*. May or may not be dynamically allocated; there must be no recompilation of the whole kernel. Because of those features they are often used for specific device drivers (or filesystems) such as soundcards etc.
