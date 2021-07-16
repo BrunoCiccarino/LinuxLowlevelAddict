@@ -34,6 +34,8 @@ You can see the modules being loaded into the kernel with the ```lsmod``` comman
 
 The generic identifier *char-major-10-30* refers to the *softdog.o* module
 
+Afterwards, modprobe looks for and examines ```/lib/modules/version/modules.dep``` to check if other modules need to be loaded before the ```softdog.o``` module. The module's dependencies are in a file created by ```depmod -a```!
+
 * LKM Hellow World:
 
 
