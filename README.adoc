@@ -38,7 +38,7 @@ static void __exit module_exit(void)
 }
 ```
 
-* LKM makefile example :
+* 2 LKM makefile example :
 
 ```c
 obj-m := example.o
