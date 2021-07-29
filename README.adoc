@@ -3,8 +3,6 @@ image::img/tux.jpg[]
 
 https://github.com/Ch4r0nN/LKM-Exploration/blob/main/LICENSE[LICENSE]
 
-== LKM-Hacking
-
 
 * Dependencies :
 ** linux-headers-generic
@@ -18,8 +16,6 @@ https://github.com/Ch4r0nN/LKM-Exploration/blob/main/LICENSE[LICENSE]
 ** 2 How modules are loaded into the kernel
 
 ** 3 LKM Hellow World
-
-
 
 
 * 1 Introduction :
