@@ -11,7 +11,15 @@ https://github.com/Ch4r0nN/LKM-Exploration/blob/main/LICENSE[LICENSE]
 
 ** C compiler I recommend ```gcc or cc```
 
-* Introduction :
+* Table of contents :
+
+** 1 Introduction
+
+** 2 How modules are loaded into the kernel
+
+** 3 LKM Hellow World
+
+* 1 Introduction :
 
 *LKMs are Loadable Kernel Modules used by the Linux kernel to enarge his functionality*. May or may not be dynamically allocated; there must be no recompilation of the whole kernel. Because of those features they are often used for specific device drivers (or filesystems) such as soundcards etc.
 Every LKM consist of two basic functions (*minimum*) :
@@ -29,7 +37,7 @@ static void __exit module_exit(void)
 }
 ```
 
-* How modules are loaded into the kernel:
+* 2 How modules are loaded into the kernel:
 
 You can see the modules being loaded into the kernel with the ```lsmod``` command it checks the information in ```/proc/modules```. And there are some ways modules use to find the kernel:
  
@@ -39,7 +47,7 @@ The generic identifier *char-major-10-30* refers to the *softdog.o* module
 
 Afterwards, modprobe looks for and examines ```/lib/modules/version/modules.dep``` to check if other modules need to be loaded before the ```softdog.o``` module. The module's dependencies are in a file created by ```depmod -a```!
 
-* LKM Hellow World:
+* 3 LKM Hellow World:
 
 
 ```c
