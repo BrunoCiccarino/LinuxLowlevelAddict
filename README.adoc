@@ -20,7 +20,7 @@ https://github.com/Ch4r0nN/LKM-Exploration/blob/main/LICENSE[LICENSE]
 ** 4 LKM Hellow World
 
 
-* 1 What is LKM and how it works :
+* ¹ What is LKM and how it works :
 
 *LKMs are Loadable Kernel Modules used by the Linux kernel to enarge his functionality*. May or may not be dynamically allocated; there must be no recompilation of the whole kernel. Because of those features they are often used for specific device drivers (or filesystems) such as soundcards etc.
 Every LKM consist of two basic functions (*minimum*) :
@@ -38,7 +38,7 @@ static void __exit module_exit(void)
 }
 ```
 
-* 2 LKM makefile example :
+* ² LKM makefile example :
 
 ```c
 obj-m := example.o
@@ -53,7 +53,7 @@ clean:
 
 ```
 
-* 3 How modules are loaded into the kernel:
+* ³ How modules are loaded into the kernel:
 
 You can see the modules being loaded into the kernel with the ```lsmod``` command it checks the information in ```/proc/modules```. And there are some ways modules use to find the kernel:
  
@@ -63,7 +63,7 @@ The generic identifier *char-major-10-30* refers to the *softdog.o* module
 
 Afterwards, modprobe looks for and examines ```/lib/modules/version/modules.dep``` to check if other modules need to be loaded before the ```softdog.o``` module. The module's dependencies are in a file created by ```depmod -a```!
 
-* 4 LKM Hellow World:
+* ⁴ LKM Hellow World:
 
 
 ```c
