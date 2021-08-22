@@ -94,6 +94,12 @@ MODULE_AUTHOR("Ch4r0nN");
 MODULE_LICENSE("MIT");
 ```
 
+* Changes :
+
+It is undeniable that there have been changes in the LKM over all these years, some more subtle than others. Here I will list the majors and linux versions that are affected!
+
+```Coming soon```
+
 * References :
 
 http://www.ouah.org/LKM_HACKING.html[The Hackers Choice]
