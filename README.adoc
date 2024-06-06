@@ -164,4 +164,4 @@ https://elinux.org/Deferred_Initcalls[elinux]
 
 https://github.com/kernelbr[Kernel Br]
 
-https://xcellerator.github.io/[linux kernel hacking]
+https://xcellerator.github.io/posts/linux_rootkits_11/[linux kernel hacking]
