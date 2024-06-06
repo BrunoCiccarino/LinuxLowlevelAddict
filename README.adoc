@@ -177,7 +177,9 @@ Modules that relied on ```kprobes.h``` to find the ```sys_call_table``` were dir
 ** 3: <linux/cred.h>: Required for access and manipulation of process credentials (although not used explicitly in the example given).
 
 ** Timer Statement
+
 ```static struct timer_list procmonitor_timer;```
+
 - Here, a timer is declared. procmonitor_timer will be used to run a function periodically.
 
 ** Timer Callback Function
