@@ -19,6 +19,9 @@ https://github.com/Ch4r0nN/LKM-Exploration/blob/main/LICENSE[LICENSE]
 
 ** 4 LKM Hellow World
 
+** 5 Changes
+
+** 6 Change in the Syscalls Table in Kernel 5.7
 
 * ¹ What is LKM and how it works :
 
