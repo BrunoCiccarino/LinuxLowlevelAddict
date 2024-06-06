@@ -136,8 +136,24 @@ It is undeniable that there have been changes in the LKM over all these years, s
 - Rust in the Kernel: First experimental support for the Rust language, allowing the development of kernel modules in Rust to improve security and robustness.
 - Security and isolation improvements: Continued security improvements, including better process isolation and strengthening security policies.
 
-⁶ Change in the Syscalls Table in Kernel 5.7
+* ⁶ Change in the Syscalls Table in Kernel 5.7
 
+Modules that relied on ```kprobes.h``` to find the ```sys_call_table``` were directly impacted by this change. kprobes is a powerful tool used for kernel debugging and instrumentation, allowing you to insert probes into various parts of the kernel code without having to recompile the kernel.
+
+** With the sys_call_table moved to a read/execute-only section of memory, finding and modifying the table has become much more difficult. Specifically:
+- Write Protection: The table is now in a memory section that does not allow writing, preventing direct modifications.
+- Obfuscation and Hiding: The table is no longer exported directly, making it more difficult to locate using traditional methods.
+
+** Technical details:
+- 1. Protected Memory: The mapping of sys_call_table has been changed to a Write-Protected (WP) memory region. This means that any direct modification attempt will result in a segmentation fault.
+   
+- 2. Removal of Exported Symbols: Symbols that directly exported the location of the sys_call_table were removed or obfuscated, making it difficult to locate the table via normal kernel introspection mechanisms.
+
+- 3. Enhanced Security: This change is part of a larger set of security improvements designed to protect the kernel from rootkits and other types of malware that attempt to modify system behavior by intercepting syscalls.
+
+** Consequences:
+- Legitimate Modules: Legitimate tools and modules that needed to intercept syscalls needed to adapt their approaches or find new ways to achieve their goals without direct access to the sys_call_table.
+- Malicious Modules: Rootkits and malware that depended on modifying sys_call_table for their malicious activities were significantly harmed, improving overall system security.
 
 * References :
 
