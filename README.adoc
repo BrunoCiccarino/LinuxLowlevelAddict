@@ -137,7 +137,7 @@ It is undeniable that there have been changes in the LKM over all these years, s
 - Security and isolation improvements: Continued security improvements, including better process isolation and strengthening security policies.
 
 
-* ⁶ Change in the Syscalls Table in Kernel 5.7
+** ⁶ Change in the Syscalls Table in Kernel 5.7
 
 Modules that relied on ```kprobes.h``` to find the ```sys_call_table``` were directly impacted by this change. kprobes is a powerful tool used for kernel debugging and instrumentation, allowing you to insert probes into various parts of the kernel code without having to recompile the kernel.
 
