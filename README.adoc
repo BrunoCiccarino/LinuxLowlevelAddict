@@ -98,7 +98,40 @@ MODULE_LICENSE("MIT");
 
 It is undeniable that there have been changes in the LKM over all these years, some more subtle than others. Here I will list the majors and linux versions that are affected!
 
-`` Coming soon ``
+** 1. Kernel 2.x (Old up to 2.6)
+- Initial LKM support: The 2.x series located in the base for module support, allowing dynamic loading and unloading of modules in the kernel.
+- Improved OOPS and PANIC: Improved debugging tools to help developers identify and fix issues in modules.
+
+** 2. Kernel 2.6.x
+- Udev introduced: Better device management with the introduction of udev, replacing devfs.
+- Preemptive Kernel: Improvements to the kernel's preemption capability, allowing it to respond more quickly to interrupts.
+- Native Posix Thread Library (NPTL): Improved thread support, affecting the way modules can handle multithreaded processes.
+
+** 3. Kernel 3.x
+- Namespace support: Introduction of namespaces, allowing better isolation and support for containers (such as Docker).
+- Filesystem performance: Significant performance improvements for filesystems such as Btrfs and Ext4.
+- Graphics and drivers: Improved support for GPUs, including integrated and discrete graphics, impacting video driver modules.
+
+** 4. Kernel 4.x
+- Security Enhancements: Introduction of Kernel Address Space Layout Randomization (KASLR) to improve security against kernel exploits.
+- Virtuozzo and better container support: Significant improvements in container support, including improvements in Cgroups and namespaces.
+- Support for new hardware: Introducing support for new hardware, including new processors and storage devices.
+
+** 5. Kernel 5.x
+- Fscrypt and casefolding: Improvements in file system encryption and casefolding support in Ext4.
+- Improved Live Patching: Improved live patching support, enabling security updates without reboots.
+- BPF (Berkeley Packet Filter): Expansion of the use of BPF beyond networks, allowing the creation of more advanced and efficient modules.
+- Support for new architectures: Better support for new architectures like RISC-V and continuous improvements for ARM.
+
+** 5. Kernel 5.7x
+- In Linux kernel 5.7, there was a significant change in the structure and visibility of the syscall table, which made it difficult for modules to find this table, especially those that used methods like kprobes.
+- Prior to kernel 5.7, the syscall table ```(sys_call_table)``` was exposed in a way that allowed kernel modules to find and modify it directly. This could be used to intercept syscalls or create syscall hooks, but it also posed a security risk as it allowed malicious modules to modify the kernel's behavior.
+- Starting with kernel 5.7, sys_call_table was made less accessible to improve kernel security. Specifically, the syscall table has been moved to the Read-Execute (RX) data section of the kernel, which prevents it from being modified directly. This change is part of a larger effort to protect the kernel against unauthorized modifications and exploits.
+
+** 6. Kernel 6.x
+- Performance and energy efficiency improvements: Tweaks to improve performance and reduce energy consumption, particularly on mobile devices.
+- Rust in the Kernel: First experimental support for the Rust language, allowing the development of kernel modules in Rust to improve security and robustness.
+- Security and isolation improvements: Continued security improvements, including better process isolation and strengthening security policies.
 
 * References :
 
