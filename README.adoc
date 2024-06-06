@@ -133,8 +133,11 @@ It is undeniable that there have been changes in the LKM over all these years, s
 - Rust in the Kernel: First experimental support for the Rust language, allowing the development of kernel modules in Rust to improve security and robustness.
 - Security and isolation improvements: Continued security improvements, including better process isolation and strengthening security policies.
 
+
 * References :
 
 http://www.ouah.org/LKM_HACKING.html[The Hackers Choice]
 
 https://elinux.org/Deferred_Initcalls[elinux]
+
+https://github.com/kernelbr[Kernel Br]
