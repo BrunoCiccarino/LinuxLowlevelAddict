@@ -163,3 +163,5 @@ http://www.ouah.org/LKM_HACKING.html[The Hackers Choice]
 https://elinux.org/Deferred_Initcalls[elinux]
 
 https://github.com/kernelbr[Kernel Br]
+
+https://xcellerator.github.io/[linux kernel hacking]
