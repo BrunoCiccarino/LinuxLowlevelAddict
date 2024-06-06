@@ -23,6 +23,8 @@ https://github.com/Ch4r0nN/LKM-Exploration/blob/main/LICENSE[LICENSE]
 
 ** 6 Change in the Syscalls Table in Kernel 5.7
 
+** 7 LKM Process monitoring
+
 * ¹ What is LKM and how it works :
 
 *LKMs are Loadable Kernel Modules used by the Linux kernel to enarge his functionality*. May or may not be dynamically allocated; there must be no recompilation of the whole kernel. Because of those features they are often used for specific device drivers (or filesystems) such as soundcards etc.
@@ -155,6 +157,117 @@ Modules that relied on ```kprobes.h``` to find the ```sys_call_table``` were dir
 ** Consequences:
 - Legitimate Modules: Legitimate tools and modules that needed to intercept syscalls needed to adapt their approaches or find new ways to achieve their goals without direct access to the sys_call_table.
 - Malicious Modules: Rootkits and malware that depended on modifying sys_call_table for their malicious activities were significantly harmed, improving overall system security.
+
+** LKM process monitoring:
+
+- LKM process monitoring is a module that can be dynamically loaded into the operating system kernel to monitor process activities. The main objective of monitoring LCM processes is to observe and, possibly, control the operations carried out by the processes using a timer, such as creating and closing processes, opening files, using the network, among others.
+
+** Header:
+
+```
+#include <linux/module.h>
+#include <linux/sched.h>
+#include <linux/timer.h>
+#include <linux/cred.h>
+```
+
+** 1: <linux/module.h>: Required for the basic structure of the module, including initialization and termination.
+** 2: <linux/sched.h>: Required to access process information (task_struct structures) and iterate over all processes.
+** 3: <linux/timer.h>: Required to configure and manipulate timers, allowing code to execute a function periodically.
+** 3: <linux/cred.h>: Required for access and manipulation of process credentials (although not used explicitly in the example given).
+
+** Timer Statement
+```static struct timer_list procmonitor_timer;```
+- Here, a timer is declared. procmonitor_timer will be used to run a function periodically.
+
+** Timer Callback Function
+
+```
+static void procmonitor_check_proc_tree(unsigned long unused)
+{
+    int ret;
+    struct task_struct *task;
+
+    /* Traversing all tasks */
+    for_each_process(task)
+        printk(KERN_INFO "process: %s, PID: %d\n", task->comm, task->pid);
+
+    /* Update the expiration time so that the callback got called again */
+    ret = mod_timer(&procmonitor_timer, jiffies + msecs_to_jiffies(2000));
+
+    if (ret)
+        printk(KERN_INFO "Error when setting timer\n");
+}
+```
+
+- This function is called whenever the timer expires.
+
+** Go through all processes:
+
+```for_each_process(task)
+    printk(KERN_INFO "process: %s, PID: %d\n", task->comm, task->pid);
+```
+- ``for_each_process`` is a macro that iterates through all processes in the system. For each process, print the name (comm) and process ID (pid).
+
+** Reset the Timer:
+
+```ret = mod_timer(&procmonitor_timer, jiffies + msecs_to_jiffies(2000));```
+
+- This line resets the timer so that the function is called again after 2000 milliseconds (2 seconds). jiffies is a global variable that represents the time since the system was started, in ticks.
+
+** Module Initialization
+
+```
+static int __init procmonitor_init(void)
+{
+    int ret;
+
+    printk(KERN_INFO "Starting module.\n");
+
+    /* Setting up our timer */
+    setup_timer(&procmonitor_timer, procmonitor_check_proc_tree, 0);
+
+    ret = mod_timer(&procmonitor_timer, jiffies + msecs_to_jiffies(200));
+
+    if (ret) {
+        printk(KERN_INFO "Error when setting timer\n");
+        return -1;
+    }
+    return 0;
+}
+```
+** Configure the Timer
+
+```setup_timer(&procmonitor_timer, procmonitor_check_proc_tree, 0);```
+
+- Initializes the procmonitor_timer timer, associating it with the procmonitor_check_proc_tree function.
+
+** Start the Timer:
+
+```ret = mod_timer(&procmonitor_timer, jiffies + msecs_to_jiffies(200));```
+
+- Sets the timer to expire after 200 milliseconds. If an error occurs, it prints a message and returns -1 to indicate failure.
+
+** Module Finalization
+
+```
+static void __exit procmonitor_exit(void)
+{
+    int ret;
+
+    ret = del_timer_sync(&procmonitor_timer);
+
+    if (ret)
+        printk("Error when removing timer\n");
+
+    printk(KERN_INFO "Cleaning up module.\n");
+}
+```
+** Remove the Timer
+
+```ret = del_timer_sync(&procmonitor_timer);```
+
+- Removes the timer synchronously, ensuring that the callback function is not running on another CPU.
 
 * References :
 
