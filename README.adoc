@@ -237,7 +237,7 @@ static int __init procmonitor_init(void)
     }
     return 0;
 }
-```
+
 
 ** Configure the Timer
 
