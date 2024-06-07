@@ -238,6 +238,7 @@ static int __init procmonitor_init(void)
     return 0;
 }
 ```
+
 ** Configure the Timer
 
 ```setup_timer(&procmonitor_timer, procmonitor_check_proc_tree, 0);```
