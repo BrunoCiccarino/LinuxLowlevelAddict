@@ -1,7 +1,7 @@
 <img src="img/tux.jpg">
 © 2021 Ch4r0nN 
 
-https://github.com/Ch4r0nN/LKM-Exploration/blob/main/LICENSE[LICENSE]
+<a href="https://github.com/Ch4r0nN/LKM-Exploration/blob/main/LICENSE">LICENSE</a>
 
 
 # Dependencies :
@@ -280,10 +280,10 @@ ret = del_timer_sync(&procmonitor_timer);
 
 # References :
 
-http://www.ouah.org/LKM_HACKING.html[The Hackers Choice]
+<a href="http://www.ouah.org/LKM_HACKING.html">The Hackers Choice</a>
 
-https://elinux.org/Deferred_Initcalls[elinux]
+<a href="https://elinux.org/Deferred_Initcalls elinux"></a>
 
-https://github.com/kernelbr[Kernel Br]
+<a href="https://github.com/kernelbr"></a>
 
-https://xcellerator.github.io/posts/linux_rootkits_11/[linux kernel hacking]
+<a href="https://xcellerator.github.io/posts/linux_rootkits_11/">linux kernel hacking</a>
