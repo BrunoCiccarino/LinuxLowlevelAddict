@@ -25,9 +25,9 @@
 
 ## 7 LKM Process monitoring
 
-# ¹ What is LKM and how it works :
+### ¹ What is LKM and how it works :
 
-#LKMs are Loadable Kernel Modules used by the Linux kernel to enarge his functionality*. May or may not be dynamically allocated; there must be no recompilation of the whole kernel. Because of those features they are often used for specific device drivers (or filesystems) such as soundcards etc.
+###LKMs are Loadable Kernel Modules used by the Linux kernel to enarge his functionality*. May or may not be dynamically allocated; there must be no recompilation of the whole kernel. Because of those features they are often used for specific device drivers (or filesystems) such as soundcards etc.
 Every LKM consist of two basic functions (*minimum*) :
 
 ```c
@@ -43,7 +43,7 @@ static void __exit module_exit(void)
 }
 ```
 
-* ² LKM makefile example :
+### ² LKM makefile example :
 
 ```c
 obj-m := example.o
@@ -58,7 +58,7 @@ clean:
 
 ```
 
-# ³ How modules are loaded into the kernel:
+### ³ How modules are loaded into the kernel:
 
 You can see the modules being loaded into the kernel with the ```lsmod``` command it checks the information in ```/proc/modules```. And there are some ways modules use to find the kernel:
  
@@ -68,7 +68,7 @@ The generic identifier *char-major-10-30* refers to the *softdog.o* module
 
 Afterwards, modprobe looks for and examines ```/lib/modules/version/modules.dep``` to check if other modules need to be loaded before the ```softdog.o``` module. The module's dependencies are in a file created by ```depmod -a```!
 
-# ⁴ LKM Hellow World:
+### ⁴ LKM Hellow World:
 
 
 ```c
@@ -99,7 +99,7 @@ MODULE_AUTHOR("Ch4r0nN");
 MODULE_LICENSE("MIT");
 ```
 
-# ⁵ Changes :
+### ⁵ Changes :
 
 It is undeniable that there have been changes in the LKM over all these years, some more subtle than others. Here I will list the majors and linux versions that are affected!
 
@@ -139,7 +139,7 @@ It is undeniable that there have been changes in the LKM over all these years, s
 - Security and isolation improvements: Continued security improvements, including better process isolation and strengthening security policies.
 
 
-## ⁶ Change in the Syscalls Table in Kernel 5.7
+### ⁶ Change in the Syscalls Table in Kernel 5.7
 
 Modules that relied on ```kprobes.h``` to find the ```sys_call_table``` were directly impacted by this change. kprobes is a powerful tool used for kernel debugging and instrumentation, allowing you to insert probes into various parts of the kernel code without having to recompile the kernel.
 
@@ -158,7 +158,7 @@ Modules that relied on ```kprobes.h``` to find the ```sys_call_table``` were dir
 - Legitimate Modules: Legitimate tools and modules that needed to intercept syscalls needed to adapt their approaches or find new ways to achieve their goals without direct access to the sys_call_table.
 - Malicious Modules: Rootkits and malware that depended on modifying sys_call_table for their malicious activities were significantly harmed, improving overall system security.
 
-## LKM process monitoring:
+## ⁶ LKM process monitoring:
 
 - LKM process monitoring is a module that can be dynamically loaded into the operating system kernel to monitor process activities. The main objective of monitoring LCM processes is to observe and, possibly, control the operations carried out by the processes using a timer, such as creating and closing processes, opening files, using the network, among others.
 
