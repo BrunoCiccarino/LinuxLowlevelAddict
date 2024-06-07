@@ -241,13 +241,13 @@ static int __init procmonitor_init(void)
 
 ** Configure the Timer
 
-```setup_timer(&procmonitor_timer, procmonitor_check_proc_tree, 0);```
+```setup_timer(&procmonitor_timer, procmonitor_check_proc_tree, 0);
 
 - Initializes the procmonitor_timer timer, associating it with the procmonitor_check_proc_tree function.
 
 ** Start the Timer:
 
-```ret = mod_timer(&procmonitor_timer, jiffies + msecs_to_jiffies(200));```
+```ret = mod_timer(&procmonitor_timer, jiffies + msecs_to_jiffies(200));
 
 - Sets the timer to expire after 200 milliseconds. If an error occurs, it prints a message and returns -1 to indicate failure.
 
