@@ -9,7 +9,7 @@
 
 <p> C compiler I recommend ```gcc or cc``` </p>
 
-<p> Table of contents :</p>
+<h4> Table of contents :</h4>
 
 <p> 1 What is LKM and how it works</p
 
