@@ -62,7 +62,7 @@ clean:
 
 You can see the modules being loaded into the kernel with the ```lsmod``` command it checks the information in ```/proc/modules```. And there are some ways modules use to find the kernel:
  
- ## [x] - ```alias char-major-10-30 softdog```
+ <p>[x] - ```alias char-major-10-30 softdog```</p>
 
 The generic identifier *char-major-10-30* refers to the *softdog.o* module
 
