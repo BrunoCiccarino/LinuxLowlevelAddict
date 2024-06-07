@@ -1,4 +1,4 @@
-<img src="img/">
+<img src="img/tux.jpg">
 © 2021 Ch4r0nN 
 
 https://github.com/Ch4r0nN/LKM-Exploration/blob/main/LICENSE[LICENSE]
