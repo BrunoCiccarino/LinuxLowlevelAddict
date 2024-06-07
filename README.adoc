@@ -264,7 +264,7 @@ static void __exit procmonitor_exit(void)
 
     printk(KERN_INFO "Cleaning up module.\n");
 }
-```
+
 ** Remove the Timer
 
 ret = del_timer_sync(&procmonitor_timer);
