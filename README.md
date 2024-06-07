@@ -27,7 +27,7 @@
 
 ### ¹ What is LKM and how it works :
 
-###LKMs are Loadable Kernel Modules used by the Linux kernel to enarge his functionality*. May or may not be dynamically allocated; there must be no recompilation of the whole kernel. Because of those features they are often used for specific device drivers (or filesystems) such as soundcards etc.
+LKMs are **Loadable Kernel Modules** used by the Linux kernel to enarge his functionality*. May or may not be dynamically allocated; there must be no recompilation of the whole kernel. Because of those features they are often used for specific device drivers (or filesystems) such as soundcards etc.
 Every LKM consist of two basic functions (*minimum*) :
 
 ```c
