@@ -4,26 +4,26 @@
 <a href="https://github.com/Ch4r0nN/LKM-Exploration/blob/main/LICENSE">LICENSE</a>
 
 
-# Dependencies :
-## linux-headers-generic
+<h4> Dependencies :</h4>
+<p> linux-headers-generic </p>
 
-## C compiler I recommend ```gcc or cc```
+<p> C compiler I recommend ```gcc or cc``` </p>
 
-# Table of contents :
+<p> Table of contents :</p>
 
-## 1 What is LKM and how it works
+<p> 1 What is LKM and how it works</p
 
-## 2 LKM makefile example
+<p> 2 LKM makefile example</p>
 
-## 3 How modules are loaded into the kernel
+<p> 3 How modules are loaded into the kernel</p>
 
-## 4 LKM Hellow World
+<p> 4 LKM Hellow World</p>
 
-## 5 Changes
+<p> 5 Changes </p>
 
-## 6 Change in the Syscalls Table in Kernel 5.7
+<p> 6 Change in the Syscalls Table in Kernel 5.7</p>
 
-## 7 LKM Process monitoring
+<p> 7 LKM Process monitoring</p>
 
 ### ¹ What is LKM and how it works :
 
