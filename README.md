@@ -300,7 +300,7 @@ ret = del_timer_sync(&procmonitor_timer);
 - Removes the timer synchronously, ensuring that the callback function is not running on another CPU.
 
 
-<p>lkm rootkit, lkm rootkits work by hooking a specific system call, which can hide malware and malicious applications. Now let's delve deeper into the lkm rootkits.</p>
+<h4>lkm rootkit </h4>, <p>lkm rootkits work by hooking a specific system call, which can hide malware and malicious applications. Now let's delve deeper into the lkm rootkits.</p>
 
 
 <h4> What is Hooking: </h4>
