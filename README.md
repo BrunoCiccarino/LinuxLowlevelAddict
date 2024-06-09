@@ -402,6 +402,7 @@ asmlinkage int hook_getdents64(unsigned int fd, struct linux_dirent64 *dirp, uns
 
 When unloading the module, the original syscall is restored:
 
+```
 static void __exit ghost_exit(void)
 {
     unprotect_memory();
@@ -410,3 +411,4 @@ static void __exit ghost_exit(void)
 
     printk(KERN_INFO "Rootkit unloaded: Syscall restored\n");
 }
+```
