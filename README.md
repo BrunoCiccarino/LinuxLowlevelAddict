@@ -172,7 +172,7 @@ The mapping of sys_call_table has been changed to a Write-Protected (WP) memory 
 
 Symbols that directly exported the location of the sys_call_table were removed or obfuscated, making it difficult to locate the table via normal kernel introspection mechanisms.
 
-- 3. Enhanced Security: 
+3. Enhanced Security: 
 
 This change is part of a larger set of security improvements designed to protect the kernel from rootkits and other types of malware that attempt to modify system behavior by intercepting syscalls.
 
