@@ -112,7 +112,7 @@ static void __exit hello_exit(void)
 }
 
 MODULE_AUTHOR("Ch4r0nN");
-MODULE_LICENSE("MIT");
+MODULE_LICENSE("GPL");
 ```
 
 ### ⁵ Changes :
