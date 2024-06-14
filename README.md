@@ -15,6 +15,8 @@
 
 <a href="https://xcellerator.github.io/posts/linux_rootkits_11/">linux kernel hacking</a>
 
+<a href="https://sysprog21.github.io/lkmpg/">Lkmpg</a>
+
 <a href="https://telegra.ph/Hooking-linux-kernel-FIFOs-05-21">Cat Enjoyer</a>
 </br>
 
